@@ -16,6 +16,10 @@ Inside the AuthService class, we are mapping the RegisterRequest object to the U
  After that, we save the user into the database. Note that we are setting the enabled flag as false, as we want to disable the user after registration,
 and we only enable the user after verifying the user’s email address.
 
+Now as we can now save the user in the database for authentication but the user should only be given access to the
+application if his/her email is verified and hence for this we will first generate the verification token for this just
+after saving the user and then we will send this verification token to the email of that particular user and for the email
+storage part we would be using a fake SMTP messenger called MAILTRAP.
 
 
 
