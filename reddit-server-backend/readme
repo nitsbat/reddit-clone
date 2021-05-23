@@ -21,9 +21,15 @@ application if his/her email is verified and hence for this we will first genera
 after saving the user and then we will send this verification token to the email of that particular user and for the email
 storage part we would be using a fake SMTP messenger called MAILTRAP.
 
+we will be using thymyleaf dependency to create html templates and use those templates to send
+the emails.
 
-
-
+Host:smtp.mailtrap.io
+Port:25 or 465 or 587 or 2525
+Username:<your-username>
+Password:<your-password>
+Auth:PLAIN, LOGIN and CRAM-MD5
+TLS:Optional (STARTTLS on all ports)
 
 
 
