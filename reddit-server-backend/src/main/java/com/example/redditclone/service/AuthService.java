@@ -3,13 +3,15 @@ package com.example.redditclone.service;
 import com.example.redditclone.dto.AuthenticationRequest;
 import com.example.redditclone.exception.SpringRedditException;
 import com.example.redditclone.mail.MailContentBuilder;
-import com.example.redditclone.model.NotificationEmail;
-import com.example.redditclone.model.User;
-import com.example.redditclone.model.VerificationToken;
+import com.example.redditclone.model.*;
 import com.example.redditclone.repository.UserRepository;
 import com.example.redditclone.repository.VerificationTokenRepository;
 import com.example.redditclone.utility.AppConstants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +37,12 @@ public class AuthService {
 
     @Autowired
     private MailService mailService;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private JwtProviderService jwtProviderService;
 
     @Transactional
     public void authorise(AuthenticationRequest authenticationRequest) throws SpringRedditException {
@@ -80,5 +88,22 @@ public class AuthService {
                 () -> new SpringRedditException("User not Found with id " + username));
         user.setEnabled(true);
         userRepository.save(user);
+    }
+
+    public AuthenticationResponse login(LoginRequest loginRequest) throws SpringRedditException {
+        Authentication authenticate = null;
+        try {
+            //This is the standard token which Spring MVC creates for an authentication.
+            authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                    loginRequest.getUsername(), loginRequest.getPassword()));
+        } catch (BadCredentialsException ex) {
+            throw new SpringRedditException("Incorrect username or password\n" + ex);
+        }
+//
+//        User user = userRepository.findByUsername(loginRequest.getUsername()).orElseThrow(
+//                () -> new SpringRedditException("User not found with username " + loginRequest.getUsername())
+//        );
+        String jwt = jwtProviderService.generateToken(authenticate);
+        return new AuthenticationResponse(loginRequest.getUsername(), jwt);
     }
 }

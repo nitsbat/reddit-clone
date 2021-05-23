@@ -2,6 +2,8 @@ package com.example.redditclone.controller;
 
 import com.example.redditclone.dto.AuthenticationRequest;
 import com.example.redditclone.exception.SpringRedditException;
+import com.example.redditclone.model.AuthenticationResponse;
+import com.example.redditclone.model.LoginRequest;
 import com.example.redditclone.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,5 +27,12 @@ public class AuthController {
     public ResponseEntity verifyAccount(@PathVariable String token) throws SpringRedditException {
         authService.verifyAccount(token);
         return new ResponseEntity("Account successfully activated", HttpStatus.OK);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<AuthenticationResponse> signIn(@RequestBody LoginRequest loginRequest)
+            throws SpringRedditException {
+        AuthenticationResponse response = authService.login(loginRequest);
+        return ResponseEntity.ok(response);
     }
 }
