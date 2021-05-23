@@ -27,6 +27,16 @@ public class User {
     @Temporal(TemporalType.DATE)
     private Date createdTime;
 
+    private boolean enabled;
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     public Long getUserId() {
         return userId;
     }

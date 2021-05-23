@@ -1,0 +1,33 @@
+After creating the Entity class with their respective data repositories we will be doing some
+configuration related to user authentication.
+Configurations - we have made a SecurityConfig class under the package config.
+In that, we have the configure method which we have overridden from the base class which takes
+HttpSecurity as an argument. Here, we are configuring Spring to allow all the requests which
+match the endpoint “/api/auth/**” , as these endpoints are used for authentication and registration
+we don’t expect the user to be authenticated at that point of time.
+PasswordEncoder
+Now before storing the user in the database, we ideally want to encode the passwords.
+one of the best hashing algorithms for passwords is the Bcrypt Algorithm.
+We are using the BCryptPasswordEncoder class provided by Spring Security.
+
+Inside the AuthService class, we are mapping the RegisterRequest object to the User object
+ and when setting the password, we are calling the encodePassword() method.
+ This method is using the BCryptPasswordEncoder to encode our password.
+ After that, we save the user into the database. Note that we are setting the enabled flag as false, as we want to disable the user after registration,
+and we only enable the user after verifying the user’s email address.
+
+
+
+
+
+
+
+
+
+
+
+
+
+Our login functionality will use the JWT
+
+
