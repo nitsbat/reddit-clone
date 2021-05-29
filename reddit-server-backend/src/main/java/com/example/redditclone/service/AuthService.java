@@ -7,22 +7,27 @@ import com.example.redditclone.model.*;
 import com.example.redditclone.repository.UserRepository;
 import com.example.redditclone.repository.VerificationTokenRepository;
 import com.example.redditclone.utility.AppConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
 @Service
 public class AuthService {
+
+    private static final Logger log = LoggerFactory.getLogger(AuthService.class);
+
     @Autowired
     private UserRepository userRepository;
 
@@ -54,11 +59,18 @@ public class AuthService {
         Date date = Calendar.getInstance().getTime();
         user.setCreatedTime(date);
         userRepository.save(user);
-        System.out.println(LocalDate.now() + " --- User Registration Successful, Sending Activaton Mail .....");
+        log.info(" --- User Registration Successful, Sending Activaton Mail .....");
 
         String token = generateVerificationToken(user);
         String message = mailContentBuilder.build("Thank you for signing up to Spring Reddit, please click on the" +
                 "below url to activate your account : " + AppConstants.ACTIVATION_LINK + "/" + token);
+
+        /*
+//                If instead of  @async notation we can make a separate thread for this as it is an independent task.
+                    TaskMail taskMail = new TaskMail(mailService, user.getEmailId(), message);
+                taskMail.start();
+         */
+
         mailService.sendMail(
                 new NotificationEmail("Please Activate Your Account", user.getEmailId(), message));
     }
@@ -106,4 +118,42 @@ public class AuthService {
         String jwt = jwtProviderService.generateToken(authenticate);
         return new AuthenticationResponse(loginRequest.getUsername(), jwt);
     }
+
+
+    @Transactional(readOnly = true)
+    public User getCurrentUser() throws SpringRedditException {
+        String userName = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User userResult = userRepository.findByUsername(userName).orElseThrow(
+                () -> new SpringRedditException("No username found for : " + userName)
+        );
+        return userResult;
+    }
 }
+
+/*
+class TaskMail extends Thread {
+
+    private static final Logger log = LoggerFactory.getLogger(TaskMail.class);
+
+    private MailService mailService;
+    private String emailId;
+    private String message;
+
+
+    public TaskMail(MailService mailService, String emailId, String message) {
+        this.mailService = mailService;
+        this.emailId = emailId;
+        this.message = message;
+    }
+
+    @Override
+    public void run() {
+        try {
+            mailService.sendMail(
+                    new NotificationEmail("Please Activate Your Account", emailId, message));
+        } catch (SpringRedditException e) {
+            log.error(e.getMessage());
+        }
+    }
+}
+ */
