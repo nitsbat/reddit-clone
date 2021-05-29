@@ -31,13 +31,9 @@ Password:<your-password>
 Auth:PLAIN, LOGIN and CRAM-MD5
 TLS:Optional (STARTTLS on all ports)
 
+Now as we have figure out the authentication we will now configure the authorisation through  JWT.
+At first we send our JWT response to the client which will then save it in his http request header
+and then Once done we will then authorise other the next request by validating that token return by the user client.
 
-
-
-
-
-
-
-Our login functionality will use the JWT
-
-
+We just needs to add one filter for it and handle all the authorisation inside it and then set it in the
+SecurityCongiurer with addFilterBefore() method.

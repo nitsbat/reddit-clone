@@ -1,5 +1,6 @@
 package com.example.redditclone.config;
 
+import com.example.redditclone.filter.JWTAuthorisationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -10,12 +11,16 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsService userDetailsService;
+
+    @Autowired
+    private JWTAuthorisationFilter jwtAuthorisationFilter;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -24,6 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/auth/**")
                 .permitAll()
                 .anyRequest().authenticated();
+        http.addFilterBefore(jwtAuthorisationFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override
