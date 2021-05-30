@@ -1,7 +1,7 @@
 package com.example.redditclone.controller;
 
 import com.example.redditclone.exception.SpringRedditException;
-import com.example.redditclone.model.SubredditDTO;
+import com.example.redditclone.dto.SubredditDTO;
 import com.example.redditclone.service.SubredditService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

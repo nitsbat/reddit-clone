@@ -2,7 +2,7 @@ package com.example.redditclone.builder;
 
 
 import com.example.redditclone.model.Subreddit;
-import com.example.redditclone.model.SubredditDTO;
+import com.example.redditclone.dto.SubredditDTO;
 import com.example.redditclone.model.User;
 
 import java.util.Date;

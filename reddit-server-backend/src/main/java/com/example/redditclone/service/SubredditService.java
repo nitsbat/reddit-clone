@@ -1,11 +1,11 @@
 package com.example.redditclone.service;
 
 
-import com.example.redditclone.builder.SubredditBuilder;
 import com.example.redditclone.exception.SpringRedditException;
+import com.example.redditclone.exception.SubredditException;
 import com.example.redditclone.mapper.SubredditMapper;
 import com.example.redditclone.model.Subreddit;
-import com.example.redditclone.model.SubredditDTO;
+import com.example.redditclone.dto.SubredditDTO;
 import com.example.redditclone.repository.SubredditRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,7 +38,7 @@ public class SubredditService {
     public SubredditDTO getSubRedit(Long id) throws SpringRedditException {
         Subreddit subreddit = subredditRepository
                 .findById(id)
-                .orElseThrow(() -> new SpringRedditException("No subreddit found with given id :" + id));
+                .orElseThrow(() -> new SubredditException("No subreddit found with given id :" + id));
         return subredditMapper.mapToSubredditDTO(subreddit);
     }
 

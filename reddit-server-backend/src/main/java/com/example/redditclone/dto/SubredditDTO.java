@@ -1,4 +1,4 @@
-package com.example.redditclone.model;
+package com.example.redditclone.dto;
 
 public class SubredditDTO {
 

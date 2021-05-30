@@ -2,7 +2,7 @@ package com.example.redditclone.mapper;
 
 import com.example.redditclone.model.Post;
 import com.example.redditclone.model.Subreddit;
-import com.example.redditclone.model.SubredditDTO;
+import com.example.redditclone.dto.SubredditDTO;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

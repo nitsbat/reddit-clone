@@ -21,11 +21,12 @@ public class Post {
     @JoinColumn(name = "user_id", referencedColumnName = "userId")
     private User user;
 
-
     private Integer voteCount;
 
     @Temporal(TemporalType.DATE)
     private Date createdDate;
+
+    private String url;
 
     @ManyToOne
     @JoinColumn(name = "subreddit_id")
@@ -61,6 +62,14 @@ public class Post {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public Integer getVoteCount() {
