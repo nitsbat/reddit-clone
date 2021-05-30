@@ -1,7 +1,7 @@
 package com.example.redditclone.service;
 
 import com.example.redditclone.exception.SpringRedditException;
-import com.example.redditclone.mail.MailContentBuilder;
+import com.example.redditclone.builder.MailContentBuilder;
 import com.example.redditclone.model.NotificationEmail;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -11,7 +11,6 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Service

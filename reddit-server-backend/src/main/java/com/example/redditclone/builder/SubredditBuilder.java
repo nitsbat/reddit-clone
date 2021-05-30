@@ -1,4 +1,4 @@
-package com.example.redditclone;
+package com.example.redditclone.builder;
 
 
 import com.example.redditclone.model.Subreddit;

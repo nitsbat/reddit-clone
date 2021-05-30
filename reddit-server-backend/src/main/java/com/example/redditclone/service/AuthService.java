@@ -2,7 +2,7 @@ package com.example.redditclone.service;
 
 import com.example.redditclone.dto.AuthenticationRequest;
 import com.example.redditclone.exception.SpringRedditException;
-import com.example.redditclone.mail.MailContentBuilder;
+import com.example.redditclone.builder.MailContentBuilder;
 import com.example.redditclone.model.*;
 import com.example.redditclone.repository.UserRepository;
 import com.example.redditclone.repository.VerificationTokenRepository;

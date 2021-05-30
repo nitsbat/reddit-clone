@@ -1,4 +1,4 @@
-package com.example.redditclone.mail;
+package com.example.redditclone.builder;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -15,12 +15,6 @@ public class SubredditController {
     @Autowired
     private SubredditService subredditService;
 
-    @GetMapping("/hello")
-    public String hello()
-            throws SpringRedditException {
-        return "<h1>Hello World </h1";
-    }
-
     @GetMapping
     public List<SubredditDTO> getAllSubRedits() {
         return subredditService.getAll();

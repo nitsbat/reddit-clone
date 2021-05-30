@@ -37,3 +37,15 @@ and then Once done we will then authorise other the next request by validating t
 
 We just needs to add one filter for it and handle all the authorisation inside it and then set it in the
 SecurityCongiurer with addFilterBefore() method.
+
+Now for the "Subreddit" endpoints we will be using the builder pattern as the subreddit api wants only some of the
+fields to be sent i.e Data transfer object. Hence we will make a DTO of the Subreddit class.
+
+Now to make the "Posts" api endpoints we need to do it the same way, but here we will be using a new library called
+mapstruct. This library will avoid us to do make a builder and using its feature we can efficiently and neatly will
+make the builder only by using small piece of code.
+So Mapstruct is a code generation library that helps us improve our code by automatically generating the Java Bean Mappings.
+As you can observe we have to manually build the mapping methods, now imagine if our Subreddit is a big entity with
+more than 5-6 fields. Then it would be difficult and complex to write mapping logic between Subreddit and SubredditDto manually.
+By using Mapstruct, we can automatically generate the mapping code at compile time.
+For installation and its usage check - https://programmingtechie.com/2019/12/14/build-a-full-stack-reddit-clone-with-spring-boot-and-angular-part-5/
