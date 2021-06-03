@@ -32,7 +32,7 @@ public class MailService {
             messageHelper.setFrom("springreddit@email.com");
             messageHelper.setTo(email.getRecipient());
             messageHelper.setSubject(email.getSubject());
-            messageHelper.setText(mailContentBuilder.build(email.getBody()));
+            messageHelper.setText(email.getBody());
         };
 
         try {

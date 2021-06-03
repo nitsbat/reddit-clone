@@ -7,6 +7,7 @@ import com.example.redditclone.model.LoginRequest;
 import com.example.redditclone.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,5 +35,12 @@ public class AuthController {
             throws SpringRedditException {
         AuthenticationResponse response = authService.login(loginRequest);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping(value = "/logout",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> signOut(@RequestHeader(value="Authorization")  String authorizationHeader)
+            throws SpringRedditException {
+        authService.logout(authorizationHeader);
+        return ResponseEntity.ok("You are successfully logout. Jwt is also deleted");
     }
 }
