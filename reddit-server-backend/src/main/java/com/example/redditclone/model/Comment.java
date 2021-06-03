@@ -2,10 +2,10 @@ package com.example.redditclone.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.Date;
 
 @Entity
 public class Comment {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long commentId;
@@ -21,6 +21,16 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "post_id", referencedColumnName = "postId")
     private Post post;
+
+    private Date createdDate;
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
 
     public Long getCommentId() {
         return commentId;
