@@ -1,6 +1,5 @@
 package com.example.redditclone.repository;
 
-import com.example.redditclone.model.Comment;
 import com.example.redditclone.model.Post;
 import com.example.redditclone.model.Subreddit;
 import com.example.redditclone.model.User;

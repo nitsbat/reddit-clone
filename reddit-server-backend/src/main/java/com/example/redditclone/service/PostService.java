@@ -2,6 +2,7 @@ package com.example.redditclone.service;
 
 import com.example.redditclone.dto.PostRequest;
 import com.example.redditclone.dto.PostResponse;
+import com.example.redditclone.exception.PostNotFoundException;
 import com.example.redditclone.exception.SpringRedditException;
 import com.example.redditclone.exception.SubredditException;
 import com.example.redditclone.mapper.PostMapper;
@@ -46,7 +47,7 @@ public class PostService {
 
     public PostResponse getPost(Long id) throws SpringRedditException {
         return postMapper.mapPostToResponse(postRepository.findById(id).orElseThrow(
-                () -> new SpringRedditException("Post not found for id : " + id)
+                () -> new PostNotFoundException("Post not found for id : " + id)
         ));
     }
 
@@ -71,6 +72,6 @@ public class PostService {
         User currentUser = authService.getCurrentUser();
         Subreddit subreddit = subredditRepository.findByName(request.getSubredditName());
 
-        postRepository.save(postMapper.mapToPostFromRequest(request,subreddit,date,currentUser));
+        postRepository.save(postMapper.mapToPostFromRequest(request, subreddit, date, currentUser));
     }
 }
