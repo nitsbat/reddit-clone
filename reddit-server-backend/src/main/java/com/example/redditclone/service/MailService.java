@@ -1,7 +1,7 @@
 package com.example.redditclone.service;
 
-import com.example.redditclone.exception.SpringRedditException;
 import com.example.redditclone.builder.MailContentBuilder;
+import com.example.redditclone.exception.SpringRedditException;
 import com.example.redditclone.model.NotificationEmail;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -25,7 +25,7 @@ public class MailService {
     @Autowired
     private MailContentBuilder mailContentBuilder;
 
-//    @Async
+    //    @Async
     public void sendMail(NotificationEmail email) throws SpringRedditException {
         MimeMessagePreparator messagePreparator = mimeMessage -> {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);

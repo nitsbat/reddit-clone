@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
+import java.util.concurrent.ExecutorService;
 
 @Service
 public class AuthService {
@@ -53,6 +54,9 @@ public class AuthService {
     @Autowired
     private BlackListTokenRepository blackListTokenRepository;
 
+    @Autowired
+    private ExecutorService executorService;
+
     @Transactional
     public void authorise(AuthenticationRequest authenticationRequest) throws SpringRedditException {
         User user = new User();
@@ -62,21 +66,35 @@ public class AuthService {
         user.setEnabled(false);
         Date date = Calendar.getInstance().getTime();
         user.setCreatedTime(date);
-        userRepository.save(user);
-        log.info(" --- User Registration Successful, Sending Activaton Mail .....");
-
-        String token = generateVerificationToken(user);
-        String message = mailContentBuilder.build("Thank you for signing up to Spring Reddit, please click on the" +
-                "below url to activate your account : " + AppConstants.ACTIVATION_LINK + "/" + token);
-
-        /*
+         /*
 //                If instead of  @async notation we can make a separate thread for this as it is an independent task.
                     TaskMail taskMail = new TaskMail(mailService, user.getEmailId(), message);
                 taskMail.start();
          */
 
-        mailService.sendMail(
-                new NotificationEmail("Please Activate Your Account", user.getEmailId(), message));
+        sendMail(user);
+
+        userRepository.save(user);
+        log.info(" --- User Registration Successful, Sending Activaton Mail .....");
+
+
+    }
+
+    private void sendMail(User user) {
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    String token = generateVerificationToken(user);
+                    String message = mailContentBuilder.build("Thank you for signing up to Spring Reddit, please click on the" +
+                            "below url to activate your account : " + AppConstants.ACTIVATION_LINK + "/" + token);
+                    mailService.sendMail(
+                            new NotificationEmail("Please Activate Your Account", user.getEmailId(), message));
+                } catch (SpringRedditException e) {
+                    log.error("Send Activation code failed.");
+                }
+            }
+        });
     }
 
     private String generateVerificationToken(User user) {
