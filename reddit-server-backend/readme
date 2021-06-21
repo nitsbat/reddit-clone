@@ -48,4 +48,3 @@ So Mapstruct is a code generation library that helps us improve our code by auto
 As you can observe we have to manually build the mapping methods, now imagine if our Subreddit is a big entity with
 more than 5-6 fields. Then it would be difficult and complex to write mapping logic between Subreddit and SubredditDto manually.
 By using Mapstruct, we can automatically generate the mapping code at compile time.
-For installation and its usage check - https://programmingtechie.com/2019/12/14/build-a-full-stack-reddit-clone-with-spring-boot-and-angular-part-5/
