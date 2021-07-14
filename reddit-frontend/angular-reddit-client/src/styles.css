@@ -1,7 +1,17 @@
-/* You can add global styles to this file, and also import other style files */
+@import '~ngx-toastr/toastr.css';
 
-input.ng-invalid.ng-touched{
-    border: 1px solid red;    
+/* You can add global styles to this file, and also import other style files */
+html{    
+  padding: 0;
+  height: 100%;  
+}
+body{
+  margin-top: 63px;
+  height: 100%; 
+}
+
+input.ng-invalid.ng-touched {
+  border: 1px solid red;
 }
 
 .login,

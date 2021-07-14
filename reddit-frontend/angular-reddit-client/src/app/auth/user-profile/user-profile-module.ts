@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
-import { SignUpComponent } from './sign-up.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UserProfileComponent } from './user-profile.component';
 
 @NgModule({
   declarations: [
-    SignUpComponent,
+    UserProfileComponent,
   ],
   imports: [
     FormsModule,
     ReactiveFormsModule],
   exports: [
-    SignUpComponent,
+    UserProfileComponent,
   ]
 })
-export class SignUpModule { }
+export class UserProfileModule { }
