@@ -14,7 +14,7 @@ import static org.springframework.http.ResponseEntity.status;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/posts")
+@RequestMapping("/api/posts/")
 public class PostController {
 
     @Autowired

@@ -21,7 +21,7 @@ public class Post {
     @JoinColumn(name = "user_id", referencedColumnName = "userId")
     private User user;
 
-    private Integer voteCount;
+    private Integer voteCount = 0;
 
     @Temporal(TemporalType.DATE)
     private Date createdDate;
@@ -94,5 +94,9 @@ public class Post {
 
     public void setSubreddit(Subreddit subreddit) {
         this.subreddit = subreddit;
+    }
+
+    public Post(){
+        this.voteCount = 0;
     }
 }
